@@ -1,4 +1,4 @@
-(* 
+(*
 			      CS51 Lab 1
 		     Basic Functional Programming
 			     Spring 2017
@@ -42,7 +42,7 @@ exercise2 is a function that returns 42 (instead of failing). When you
 submit, the Exercise 2 unit test should then pass.
 ......................................................................*)
 
-let exercise2 () = failwith "exercise2 not implemented" ;;
+let exercise2 () = 42 ;;
 
 (* Note that your grade on labs is not dependent on your passing the
 unit tests. You'll see that even when a unit test is marked as passed,
@@ -99,7 +99,7 @@ appropriate OCaml expression to assign the value to the variable
 exercise1 below.
 ......................................................................*)
 
-let exercise3 () = failwith "exercise3 not implemented" ;;
+let exercise3 () = 3-5;;
 
 (* Hint: The OCaml concrete expression
 
@@ -112,8 +112,17 @@ Exercise 4: Draw the tree that the concrete syntax "- 5 - 3" does
 correspond to. Check it with a member of the course staff if you'd
 like.
 ......................................................................*)
+(*
+    -
+    ^
+   / \
+  /   \
+  -    3
+  |
+  |
+  5
+*)
 
-   
 (*======================================================================
 Part 2: Types and type inference
 
@@ -124,24 +133,23 @@ expressions below? Test your solution by uncommenting the examples
 error is generated.
 ......................................................................*)
 
-(*   <--- remove this start of comment line
 
-let exercise5a : ??? = 42 ;;
 
-let exercise5b : ??? =
+let exercise5a : int = 42 ;;
+
+let exercise5b: string =
   let greet y = "Hello " ^ y
   in greet "World!";;
 
-let exercise5c : ???  =
+let exercise5c : int * float -> int  =
   fun (x, y) -> x + int_of_float y ;;
 
-let exercise5d : ??? =
+let exercise5d : int -> bool =
   fun x -> x < x + 1 ;;
 
-let exercise5e : ??? =
+let exercise5e : bool -> bool list =
   fun x -> if x then [x] else [] ;;
 
-remove this end of comment line too ----> *)
 
 (*======================================================================
 Part 3: First-order functional programming
@@ -170,28 +178,35 @@ to the list containing the elements 3, 4, and 5? You'll want to
 replace the "[]" with the correct functional call.
 ......................................................................*)
 
-let square_all (lst : int list) : int list =
-  failwith "square_all not implemented" ;;
+let rec square_all (lst : int list) : int list =
+  match lst with
+  |[] -> []
+  | head :: tail -> head * head :: square_all tail;;
 
-let exercise6 = [] ;;
+
+let exercise6 = square_all[-3;-2;-1;0;1;2;3] ;;
 
 (*......................................................................
 Exercise 7: Define a recursive function that sums an integer
 list. (What's a sensible return value for the empty list?)
 ......................................................................*)
 
-let sum (lst : int list) : int =
-  failwith "sum not implemented" ;;
-  
+let rec sum (lst : int list) : int =
+  match lst with
+  | [] -> 0
+  | h::t -> h + sum t;;
+
 (*......................................................................
 Exercise 8: Define a recursive function that returns the maximum
 element in a non-empty integer list. On the empty list, the function
 can raise an appropriate exception -- a Match_failure or
 Invalid_argument exception for instance.
 ......................................................................*)
-
-let max_list (lst : int list) : int =
-  failwith "max_list not implemented" ;;
+let rec max_list (lst : int list) : int =
+  match lst with
+  |[] -> failwith "List cannot be empty"
+  |[x] -> x
+  |h::t -> max h (max_list t);;
 
 (*......................................................................
 Exercise 9: Define a function zip, that takes two int lists and
@@ -286,7 +301,7 @@ list:
 
     let double : int list -> int list =
       map (( * ) 2) ;;
-    
+
 END IMPORTANT NOTES
 
 ........................................................................
@@ -303,7 +318,7 @@ Exercise 12: Reimplement prods using map.
 
 let prods_ho (lst : (int * int) list) : int list =
   failwith "prods_ho not implemented" ;;
-  
+
 (*......................................................................
 Exercise 13: The OCaml List module provides, in addition to the map,
 fold_left, and fold_right higher-order functions, several other useful
@@ -321,6 +336,6 @@ Exercise 14: Define a function evens, using these higher-order
 functional programming techniques, that returns a list of all of the
 even numbers in its argument list.
 ......................................................................*)
-   
+
 let evens : int list -> int list =
   fun _ -> failwith "evens not implemented" ;;
